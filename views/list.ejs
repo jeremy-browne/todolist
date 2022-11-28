@@ -4,22 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <title>To Do List</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
-    <h1><%= date%></h1>
-    
-    <ul>
-        <% for (var i = 0; i < newListItems.length; i++ ) { %>
-            <li><%= newListItems[i] %></li>
-        <% } %>
-    </ul>
+    <div class="box" id="heading">
+        <h1>
+            <%= date%>
+        </h1>
+    </div>
 
-    <form action="/" method="post">
-        <label for="newItem">Add new item</label><br>
-        <input type="text" id="newItem" name="newItem" value=""><br>
-        <input type="submit" value="Submit">
-      </form> 
+    <div class="box">
+
+        <% for (var i=0; i < newListItems.length; i++ ) { %>
+            <div class="item">
+                <input type="checkbox">
+                <p><%= newListItems[i] %></p>
+            </div>
+        <% } %>
+
+        <form class="item" action="/" method="post">
+            <input type="text" id="newItem" name="newItem" value="" placeholder="Enter your list item" autocomplete="off">
+            <button type="submit" value="Submit">+</button>
+        </form>
+    </div>
+
+
+    
 </body>
 
 </html>
