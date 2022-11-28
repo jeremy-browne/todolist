@@ -1,20 +1,35 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const port = 3000;
-const daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 const app = express();
 
+let items = [];
+
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
     let today = new Date();
-    let currentDay = today.getDay();
-    var day = daysOfTheWeek[currentDay];
+    let options = {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+    }
 
-
-    res.render("list", {kindOfDay: day});
+    let date = today.toLocaleDateString("en-AU", options);
+    res.render("list", {
+        date: date,
+        newListItems: items
+    });
 });
+
+app.post("/", (req, res) => {
+    items.push(req.body.newItem)
+    console.log(req.body.newItem);
+    res.redirect("/");
+})
 
 app.listen(port, () => {
     console.log("Server started on port " + port);
